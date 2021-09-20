@@ -1,0 +1,17 @@
+Win32
+Win64
+*.dcu
+*.exe
+*.dll
+*.manifest
+*.conf
+*.msg
+*.local
+*.identcache
+*.log
+*.stat
+*.todo
+*.vlb
+__history/
+__recovery/
+*.~*
