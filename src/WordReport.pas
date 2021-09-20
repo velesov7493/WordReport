@@ -1,20 +1,20 @@
 unit WordReport;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\
-|  WordReport - Компонент для автоматизации создания отчетов в MS Word.        |                                                     |
+|  WordReport - РљРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ Р°РІС‚РѕРјР°С‚РёР·Р°С†РёРё СЃРѕР·РґР°РЅРёСЏ РѕС‚С‡РµС‚РѕРІ РІ MS Word.        |
 |                                                                              |
-|  Модуль: WordReport                                                          |
-|  Автор: Власов Александр Сергеевич (greyfox84@list.ru)                       |
-|  Copyright: 2012 Власов Александр Сергеевич                                  |
-|  Дата: 10.11.2012                                                            |
+|  РњРѕРґСѓР»СЊ: WordReport                                                          |
+|  РђРІС‚РѕСЂ: Р’Р»Р°СЃРѕРІ РђР»РµРєСЃР°РЅРґСЂ РЎРµСЂРіРµРµРІРёС‡ (velesov7493@yandex.ru)                   |
+|  Copyright: 2012 Р’Р»Р°СЃРѕРІ РђР»РµРєСЃР°РЅРґСЂ РЎРµСЂРіРµРµРІРёС‡                                  |
+|  Р”Р°С‚Р°: 10.11.2012                                                            |
 |                                                                              |
-|  Описание:                                                                   |
+|  РћРїРёСЃР°РЅРёРµ:                                                                   |
 |                                                                              |
-|  При запуске метода Build экземпляр класса TWordReport достает все имена     |
-|  переменных вне секций, имена секций, имена всех переменных в каждой секции  |
-|  из шаблона, указанного в TemplateDocFileName. Далее вызывается обработчик   |
-|  OnReadMaket для привязки данных к этим именам. Затем данные отправляются    |
-|  в готовый отчет, который сохраняется в документе с именем ResultDocFileName |
+|  РџСЂРё Р·Р°РїСѓСЃРєРµ РјРµС‚РѕРґР° Build СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° TWordReport РґРѕСЃС‚Р°РµС‚ РІСЃРµ РёРјРµРЅР°     |
+|  РїРµСЂРµРјРµРЅРЅС‹С… РІРЅРµ СЃРµРєС†РёР№, РёРјРµРЅР° СЃРµРєС†РёР№, РёРјРµРЅР° РІСЃРµС… РїРµСЂРµРјРµРЅРЅС‹С… РІ РєР°Р¶РґРѕР№ СЃРµРєС†РёРё  |
+|  РёР· С€Р°Р±Р»РѕРЅР°, СѓРєР°Р·Р°РЅРЅРѕРіРѕ РІ TemplateDocFileName. Р”Р°Р»РµРµ РІС‹Р·С‹РІР°РµС‚СЃСЏ РѕР±СЂР°Р±РѕС‚С‡РёРє   |
+|  OnReadMaket РґР»СЏ РїСЂРёРІСЏР·РєРё РґР°РЅРЅС‹С… Рє СЌС‚РёРј РёРјРµРЅР°Рј. Р—Р°С‚РµРј РґР°РЅРЅС‹Рµ РѕС‚РїСЂР°РІР»СЏСЋС‚СЃСЏ    |
+|  РІ РіРѕС‚РѕРІС‹Р№ РѕС‚С‡РµС‚, РєРѕС‚РѕСЂС‹Р№ СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РІ РґРѕРєСѓРјРµРЅС‚Рµ СЃ РёРјРµРЅРµРј ResultDocFileName |
 |                                                                              |
 \=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-}
 
@@ -40,16 +40,16 @@ type
   TDataBand = class
   private
     fName: string;
-    fRowBookmark: string;                                       // Имя закладки для секции документа
-    fVariableNames: TBandVariables;                             // Соответствие между именами полей Dataset`а и именами переменных
-    fVariableCount: integer;                                    // Количество переменных в повторяемой секции
-    fCounterName: string;                                       // Имя счетчика в секции документа
-    fCounterVal: integer;                                       // Значение счетчика секции
-    fDataSet: PDataSet;                                         // Указатель на DataSet
-    fTableNumber: integer;                                      // Номер таблицы документа, которой принадлежит секция
-    fKeyName: string;                                           // Имя сигнального поля НД для группы секций
-    fKeyValue: integer;                                         // Значение сигнального поля НД для этой секции. Также используется как уровень вложенности
-    fNextBand: PDataBand;                                       // Указатель на следующую секцию в группе
+    fRowBookmark: string;                                       // РРјСЏ Р·Р°РєР»Р°РґРєРё РґР»СЏ СЃРµРєС†РёРё РґРѕРєСѓРјРµРЅС‚Р°
+    fVariableNames: TBandVariables;                             // РЎРѕРѕС‚РІРµС‚СЃС‚РІРёРµ РјРµР¶РґСѓ РёРјРµРЅР°РјРё РїРѕР»РµР№ Dataset`Р° Рё РёРјРµРЅР°РјРё РїРµСЂРµРјРµРЅРЅС‹С…
+    fVariableCount: integer;                                    // РљРѕР»РёС‡РµСЃС‚РІРѕ РїРµСЂРµРјРµРЅРЅС‹С… РІ РїРѕРІС‚РѕСЂСЏРµРјРѕР№ СЃРµРєС†РёРё
+    fCounterName: string;                                       // РРјСЏ СЃС‡РµС‚С‡РёРєР° РІ СЃРµРєС†РёРё РґРѕРєСѓРјРµРЅС‚Р°
+    fCounterVal: integer;                                       // Р—РЅР°С‡РµРЅРёРµ СЃС‡РµС‚С‡РёРєР° СЃРµРєС†РёРё
+    fDataSet: PDataSet;                                         // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° DataSet
+    fTableNumber: integer;                                      // РќРѕРјРµСЂ С‚Р°Р±Р»РёС†С‹ РґРѕРєСѓРјРµРЅС‚Р°, РєРѕС‚РѕСЂРѕР№ РїСЂРёРЅР°РґР»РµР¶РёС‚ СЃРµРєС†РёСЏ
+    fKeyName: string;                                           // РРјСЏ СЃРёРіРЅР°Р»СЊРЅРѕРіРѕ РїРѕР»СЏ РќР” РґР»СЏ РіСЂСѓРїРїС‹ СЃРµРєС†РёР№
+    fKeyValue: integer;                                         // Р—РЅР°С‡РµРЅРёРµ СЃРёРіРЅР°Р»СЊРЅРѕРіРѕ РїРѕР»СЏ РќР” РґР»СЏ СЌС‚РѕР№ СЃРµРєС†РёРё. РўР°РєР¶Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РєР°Рє СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё
+    fNextBand: PDataBand;                                       // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰СѓСЋ СЃРµРєС†РёСЋ РІ РіСЂСѓРїРїРµ
     function FindVariable(VarName:string): integer;
     function VarToPattern(VarIndex:integer):string;
     function getTableNumberByBookmark: integer;
@@ -137,11 +137,11 @@ const
   wdFindContinue = 1;
 
 var
-  wProgress: TProgressForm;     // переменная формы прогресса
-  curWordApp: Variant;          // OLE-объект Word
-  curDocument: Variant;         // OLE-объект документа
+  wProgress: TProgressForm;     // РїРµСЂРµРјРµРЅРЅР°СЏ С„РѕСЂРјС‹ РїСЂРѕРіСЂРµСЃСЃР°
+  curWordApp: Variant;          // OLE-РѕР±СЉРµРєС‚ Word
+  curDocument: Variant;         // OLE-РѕР±СЉРµРєС‚ РґРѕРєСѓРјРµРЅС‚Р°
 
-// Извлечь имя свободной переменной из его шаблона
+// РР·РІР»РµС‡СЊ РёРјСЏ СЃРІРѕР±РѕРґРЅРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ РёР· РµРіРѕ С€Р°Р±Р»РѕРЅР°
 
 function PatternToName(ParamPattern:string):string;
 var
@@ -152,19 +152,19 @@ begin
   Result:=MidStr(ParamPattern,i1,i2-i1);
 end;
 
-// Получить шаблон из имени
+// РџРѕР»СѓС‡РёС‚СЊ С€Р°Р±Р»РѕРЅ РёР· РёРјРµРЅРё
 
 function NameToPattern(ParamName:string):string;
 begin
   Result:='#('+ParamName+')';
 end;
 
-// Подготовить OLE-объект поиска Word
-// Вход:
-//   FindText - что искать
-//   RegExp - Считать FindText регулярным выражением Word
-// Выход:
-//   FindObj - подготовленный объект поиска
+// РџРѕРґРіРѕС‚РѕРІРёС‚СЊ OLE-РѕР±СЉРµРєС‚ РїРѕРёСЃРєР° Word
+// Р’С…РѕРґ:
+//   FindText - С‡С‚Рѕ РёСЃРєР°С‚СЊ
+//   RegExp - РЎС‡РёС‚Р°С‚СЊ FindText СЂРµРіСѓР»СЏСЂРЅС‹Рј РІС‹СЂР°Р¶РµРЅРёРµРј Word
+// Р’С‹С…РѕРґ:
+//   FindObj - РїРѕРґРіРѕС‚РѕРІР»РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ РїРѕРёСЃРєР°
 
 procedure PrepareFindObject(FindText:string; RegExp:boolean; var FindObj:Variant);
 begin
@@ -212,8 +212,8 @@ begin
   fDataSet:=nil;
 end;
 
-// Найти переменную секции, т.е. получить ее индекс
-// Возвращает -1, если такой переменной нет
+// РќР°Р№С‚Рё РїРµСЂРµРјРµРЅРЅСѓСЋ СЃРµРєС†РёРё, С‚.Рµ. РїРѕР»СѓС‡РёС‚СЊ РµРµ РёРЅРґРµРєСЃ
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ -1, РµСЃР»Рё С‚Р°РєРѕР№ РїРµСЂРµРјРµРЅРЅРѕР№ РЅРµС‚
 
 function TDataBand.FindVariable(VarName: string):integer;
 var
@@ -228,8 +228,8 @@ begin
   Result:=r;
 end;
 
-// Получить номер таблицы документа, в которой находится
-// диапазон закладки секции
+// РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ С‚Р°Р±Р»РёС†С‹ РґРѕРєСѓРјРµРЅС‚Р°, РІ РєРѕС‚РѕСЂРѕР№ РЅР°С…РѕРґРёС‚СЃСЏ
+// РґРёР°РїР°Р·РѕРЅ Р·Р°РєР»Р°РґРєРё СЃРµРєС†РёРё
 
 function TDataBand.getTableNumberByBookmark: integer;
 var
@@ -254,11 +254,11 @@ begin
         tableNumber:=i;
         Break;
       end;
-  end else raise Exception.Create('Закладка не является частью таблицы');
+  end else raise Exception.Create('Р—Р°РєР»Р°РґРєР° РЅРµ СЏРІР»СЏРµС‚СЃСЏ С‡Р°СЃС‚СЊСЋ С‚Р°Р±Р»РёС†С‹');
   Result:=tableNumber;
 end;
 
-// Получить параметр переменной по имени переменной и индексу этого параметра
+// РџРѕР»СѓС‡РёС‚СЊ РїР°СЂР°РјРµС‚СЂ РїРµСЂРµРјРµРЅРЅРѕР№ РїРѕ РёРјРµРЅРё РїРµСЂРµРјРµРЅРЅРѕР№ Рё РёРЅРґРµРєСЃСѓ СЌС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР°
 
 function TDataBand.GetDimensionByVarName(VarName: string; Index: integer): string;
 var
@@ -268,7 +268,7 @@ begin
   if index>0 then Result:=fVariableNames[Index,VarIndex] else Result:='';
 end;
 
-// Установить параметр переменной по имени переменной и индексу этого параметра
+// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїР°СЂР°РјРµС‚СЂ РїРµСЂРµРјРµРЅРЅРѕР№ РїРѕ РёРјРµРЅРё РїРµСЂРµРјРµРЅРЅРѕР№ Рё РёРЅРґРµРєСЃСѓ СЌС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР°
 
 procedure TDataBand.SetDimensionByVarName(VarName: string; Index: integer; Value: string);
 var
@@ -279,8 +279,8 @@ begin
   fVariableNames[Index,VarIndex]:=Value;
 end;
 
-// Получить шаблон переменной секции по индексу
-// индекс=0 у счетчика записей секции
+// РџРѕР»СѓС‡РёС‚СЊ С€Р°Р±Р»РѕРЅ РїРµСЂРµРјРµРЅРЅРѕР№ СЃРµРєС†РёРё РїРѕ РёРЅРґРµРєСЃСѓ
+// РёРЅРґРµРєСЃ=0 Сѓ СЃС‡РµС‚С‡РёРєР° Р·Р°РїРёСЃРµР№ СЃРµРєС†РёРё
 
 function TDataBand.VarToPattern(VarIndex:integer):string;
 var r: string;
@@ -290,8 +290,8 @@ begin
   Result:=r;
 end;
 
-// Привязать поле набора данных и его формат
-// к переменной VariableName
+// РџСЂРёРІСЏР·Р°С‚СЊ РїРѕР»Рµ РЅР°Р±РѕСЂР° РґР°РЅРЅС‹С… Рё РµРіРѕ С„РѕСЂРјР°С‚
+// Рє РїРµСЂРµРјРµРЅРЅРѕР№ VariableName
 
 procedure TDataBand.SetField(VariableName,FieldName,Format:string);
 var
@@ -299,18 +299,18 @@ var
 begin
   VarIndex:=FindVariable(VariableName);
   if VarIndex<0 then begin
-    raise Exception.Create('Переменная "'+VariableName+'" отсутствует в секции "'+fName+'" документа');
+    raise Exception.Create('РџРµСЂРµРјРµРЅРЅР°СЏ "'+VariableName+'" РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ СЃРµРєС†РёРё "'+fName+'" РґРѕРєСѓРјРµРЅС‚Р°');
     Exit;
   end;
   fVariableNames[bvField,VarIndex]:=FieldName;
   fVariableNames[bvFormat,VarIndex]:=Format;
 end;
 
-// "Втолкнуть" данные
-// Отправляет все данные секции в документ
+// "Р’С‚РѕР»РєРЅСѓС‚СЊ" РґР°РЅРЅС‹Рµ
+// РћС‚РїСЂР°РІР»СЏРµС‚ РІСЃРµ РґР°РЅРЅС‹Рµ СЃРµРєС†РёРё РІ РґРѕРєСѓРјРµРЅС‚
 
 var
-  // Прежнее значение сигнального поля
+  // РџСЂРµР¶РЅРµРµ Р·РЅР°С‡РµРЅРёРµ СЃРёРіРЅР°Р»СЊРЅРѕРіРѕ РїРѕР»СЏ
   OldKeyValue: integer;
 
 procedure TDataBand.PokeData;
@@ -324,7 +324,7 @@ var
 begin
   if fDataSet=nil then Exit;
   if Length(fKeyName)=0 then begin
-    // Если секция не состоит в группе, то обрабатываем ее обыкновенно
+    // Р•СЃР»Рё СЃРµРєС†РёСЏ РЅРµ СЃРѕСЃС‚РѕРёС‚ РІ РіСЂСѓРїРїРµ, С‚Рѕ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј РµРµ РѕР±С‹РєРЅРѕРІРµРЅРЅРѕ
     fDataSet.First;
     for i:=1 to fDataset.RecordCount do begin
       Pattern:=VarToPattern(0);
@@ -355,9 +355,9 @@ ValueDefinedS:
       wProgress.DoProgress(1);
     end;
   end else begin
-    // Иначе обрабатываем только записи с нашим значением сигнального поля
+    // РРЅР°С‡Рµ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРј С‚РѕР»СЊРєРѕ Р·Р°РїРёСЃРё СЃ РЅР°С€РёРј Р·РЅР°С‡РµРЅРёРµРј СЃРёРіРЅР°Р»СЊРЅРѕРіРѕ РїРѕР»СЏ
     c:=fDataset.FieldByName(fKeyName).AsInteger;
-    // Если уровень вложенности больше прежнего, то сбросить счетчик
+    // Р•СЃР»Рё СѓСЂРѕРІРµРЅСЊ РІР»РѕР¶РµРЅРЅРѕСЃС‚Рё Р±РѕР»СЊС€Рµ РїСЂРµР¶РЅРµРіРѕ, С‚Рѕ СЃР±СЂРѕСЃРёС‚СЊ СЃС‡РµС‚С‡РёРє
     if fKeyValue>OldKeyValue then fCounterVal:=1;
     while (c=fKeyValue) and (not fDataset.Eof) do begin
       Pattern:=VarToPattern(0);
@@ -393,8 +393,8 @@ ValueDefinedM:
   end;
 end;
 
-// Подготовить секцию для вывода записей
-// Размножает секцию, чтобы она повторялась столько раз, сколько записей в НД
+// РџРѕРґРіРѕС‚РѕРІРёС‚СЊ СЃРµРєС†РёСЋ РґР»СЏ РІС‹РІРѕРґР° Р·Р°РїРёСЃРµР№
+// Р Р°Р·РјРЅРѕР¶Р°РµС‚ СЃРµРєС†РёСЋ, С‡С‚РѕР±С‹ РѕРЅР° РїРѕРІС‚РѕСЂСЏР»Р°СЃСЊ СЃС‚РѕР»СЊРєРѕ СЂР°Р·, СЃРєРѕР»СЊРєРѕ Р·Р°РїРёСЃРµР№ РІ РќР”
 
 procedure TDataBand.Prepare;
 begin
@@ -417,14 +417,14 @@ begin
   end;
 end;
 
-// Подключить НД к секции
+// РџРѕРґРєР»СЋС‡РёС‚СЊ РќР” Рє СЃРµРєС†РёРё
 
 procedure TDataBand.AssignDataSet(aDataSet: PDataSet);
 var
   tn: integer;
 begin
   if not (aDataset^ is TDataset) then begin
-    raise Exception.Create('Неправильный указатель на TDataset');
+    raise Exception.Create('РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° TDataset');
     Exit;
   end;
   fDataSet:=aDataSet;
@@ -443,7 +443,7 @@ begin
   fShowResult:=true;
 end;
 
-// Закрыть активный документ
+// Р—Р°РєСЂС‹С‚СЊ Р°РєС‚РёРІРЅС‹Р№ РґРѕРєСѓРјРµРЅС‚
 
 procedure TWordReport.CloseDocument;
 var
@@ -456,8 +456,8 @@ begin
   wProgress.DoProgress(10);
 end;
 
-// Завершить Word, если он невидим или показать - если видим.
-// Закрыть и освободить окно прогресса
+// Р—Р°РІРµСЂС€РёС‚СЊ Word, РµСЃР»Рё РѕРЅ РЅРµРІРёРґРёРј РёР»Рё РїРѕРєР°Р·Р°С‚СЊ - РµСЃР»Рё РІРёРґРёРј.
+// Р—Р°РєСЂС‹С‚СЊ Рё РѕСЃРІРѕР±РѕРґРёС‚СЊ РѕРєРЅРѕ РїСЂРѕРіСЂРµСЃСЃР°
 
 procedure TWordReport.Quit;
 begin
@@ -476,7 +476,7 @@ begin
   inherited Destroy;
 end;
 
-// Отрыть шаблон, указанный в TemplateDocFileName в MS Word
+// РћС‚СЂС‹С‚СЊ С€Р°Р±Р»РѕРЅ, СѓРєР°Р·Р°РЅРЅС‹Р№ РІ TemplateDocFileName РІ MS Word
 
 procedure TWordReport.ReadMaket;
 var
@@ -489,34 +489,34 @@ begin
     curWordApp:=CreateOleObject('Word.Application');
     verS:=curWordApp.Version;
   except
-    Error:='MS Word недоступен';
+    Error:='MS Word РЅРµРґРѕСЃС‚СѓРїРµРЅ';
   end;
   Val(verS,version,cpos);
   if (cpos=0) and (version>=9) then begin
     fBandCount:=0;
     curWordApp.Visible:=false;
-  end else Error:=Error+#10#13+'Требуется MS Word 2000 и выше';
+  end else Error:=Error+#10#13+'РўСЂРµР±СѓРµС‚СЃСЏ MS Word 2000 Рё РІС‹С€Рµ';
   try
     curDocument:=curWordApp.Documents.Add(fTemplateDocFileName);
   except
-    Error:='Не удалось открыть шаблон: "'+fTemplateDocFileName+'"'+#10#13#10#13+Error;
+    Error:='РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С€Р°Р±Р»РѕРЅ: "'+fTemplateDocFileName+'"'+#10#13#10#13+Error;
   end;
   if Length(Error)=0 then ReadVarNames else raise Exception.Create(Error);
 end;
 
-// Установить документ шаблона
+// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РґРѕРєСѓРјРµРЅС‚ С€Р°Р±Р»РѕРЅР°
 
 procedure TWordReport.SetTemplateFileName(Value: string);
 begin
   if fTemplateDocFileName<>Value then fTemplateDocFileName:=Value;
 end;
 
-// Подсчитать сложность отчета
-// = КоличествоСвобПеременных
-// +КоличествоЗаписейВоВсехНД
-// +10 на закрытие документа
-// +10 на сохранение документа
-// +40 на завершение MS Word
+// РџРѕРґСЃС‡РёС‚Р°С‚СЊ СЃР»РѕР¶РЅРѕСЃС‚СЊ РѕС‚С‡РµС‚Р°
+// = РљРѕР»РёС‡РµСЃС‚РІРѕРЎРІРѕР±РџРµСЂРµРјРµРЅРЅС‹С…
+// +РљРѕР»РёС‡РµСЃС‚РІРѕР—Р°РїРёСЃРµР№Р’РѕР’СЃРµС…РќР”
+// +10 РЅР° Р·Р°РєСЂС‹С‚РёРµ РґРѕРєСѓРјРµРЅС‚Р°
+// +10 РЅР° СЃРѕС…СЂР°РЅРµРЅРёРµ РґРѕРєСѓРјРµРЅС‚Р°
+// +40 РЅР° Р·Р°РІРµСЂС€РµРЅРёРµ MS Word
 
 function TWordReport.GetReportDifficulty: integer;
 var
@@ -535,8 +535,8 @@ begin
   Result:=s;
 end;
 
-// Прочитать имена секции, счетчика и переменной
-// из объявления переменной секции в шаблоне
+// РџСЂРѕС‡РёС‚Р°С‚СЊ РёРјРµРЅР° СЃРµРєС†РёРё, СЃС‡РµС‚С‡РёРєР° Рё РїРµСЂРµРјРµРЅРЅРѕР№
+// РёР· РѕР±СЉСЏРІР»РµРЅРёСЏ РїРµСЂРµРјРµРЅРЅРѕР№ СЃРµРєС†РёРё РІ С€Р°Р±Р»РѕРЅРµ
 
 procedure TWordReport.ReadBandNames(Pattern:string; var Band,Counter,Variable: string);
 var
@@ -552,7 +552,7 @@ begin
   Variable:=MidStr(s,i1,c);
 end;
 
-// Создать новую переменную секции
+// РЎРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РїРµСЂРµРјРµРЅРЅСѓСЋ СЃРµРєС†РёРё
 
 procedure TWordReport.NewBandVar(aBookmark: string; aBandName: string; aCounterName: string; aVariableName: string);
 var
@@ -577,16 +577,16 @@ begin
   end;
 end;
 
-// Установить значение переменной вне секций
+// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ РІРЅРµ СЃРµРєС†РёР№
 
 procedure TWordReport.SetValue(VariableName:string; Value:Variant);
 begin
   if fReportVars.FindParam(VariableName)<>nil then
     fReportVars.ParamByName(VariableName).Value:=Value
-  else raise Exception.Create('Переменная "'+VariableName+'" отсутствует в документе');
+  else raise Exception.Create('РџРµСЂРµРјРµРЅРЅР°СЏ "'+VariableName+'" РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ РґРѕРєСѓРјРµРЅС‚Рµ');
 end;
 
-// Получить секцию по ее имени
+// РџРѕР»СѓС‡РёС‚СЊ СЃРµРєС†РёСЋ РїРѕ РµРµ РёРјРµРЅРё
 
 function TWordReport.GetBandByName(BandName:string): TDataBand;
 var
@@ -599,7 +599,7 @@ begin
   end;
 end;
 
-// Получить номер секции по ее имени
+// РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂ СЃРµРєС†РёРё РїРѕ РµРµ РёРјРµРЅРё
 
 function TWordReport.GetBandNumber(BandName: string): integer;
 var
@@ -612,7 +612,7 @@ begin
   end;
 end;
 
-// Начать отсчет прогресса сборки
+// РќР°С‡Р°С‚СЊ РѕС‚СЃС‡РµС‚ РїСЂРѕРіСЂРµСЃСЃР° СЃР±РѕСЂРєРё
 
 procedure TWordReport.StartProgress;
 begin
@@ -624,7 +624,7 @@ begin
   wProgress.Show;
 end;
 
-// Прочитать имена из шаблона
+// РџСЂРѕС‡РёС‚Р°С‚СЊ РёРјРµРЅР° РёР· С€Р°Р±Р»РѕРЅР°
 
 procedure TWordReport.ReadVarNames;
 var
@@ -650,15 +650,15 @@ begin
     if curWordApp.Selection.BookmarkID>0 then begin
       cBmName:=curDocument.Bookmarks.Item(curWordApp.Selection.BookmarkID).Name;
       if (LowerCase(LeftStr(cBmName,4))<>'data') or (Pos(cBmName[5],'12345678')=0) then
-        raise Exception.Create('Имя закладки секции не соответствует спецификации');
+        raise Exception.Create('РРјСЏ Р·Р°РєР»Р°РґРєРё СЃРµРєС†РёРё РЅРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓРµС‚ СЃРїРµС†РёС„РёРєР°С†РёРё');
     end else
-      raise Exception.Create('Переменная "'+curWordApp.Selection.Text+'" объявлена вне закладки');
+      raise Exception.Create('РџРµСЂРµРјРµРЅРЅР°СЏ "'+curWordApp.Selection.Text+'" РѕР±СЉСЏРІР»РµРЅР° РІРЅРµ Р·Р°РєР»Р°РґРєРё');
     ReadBandNames(curWordApp.Selection.Text,cBandName,cCounterName,cVarName);
     NewBandVar(cBmName,cBandName,cCounterName,cVarName);
   end;
 end;
 
-// Отправить данные, привязанные пользователем, в документ
+// РћС‚РїСЂР°РІРёС‚СЊ РґР°РЅРЅС‹Рµ, РїСЂРёРІСЏР·Р°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј, РІ РґРѕРєСѓРјРµРЅС‚
 
 procedure TWordReport.BindVariables;
 var
@@ -679,7 +679,7 @@ begin
   SkipBands:=[];
   for i:=1 to fBandCount do
     if (fDataBands[i].fNextBand<>nil) then begin
-      // Если секция в группе, то выводить ее вместе со связанной секцией
+      // Р•СЃР»Рё СЃРµРєС†РёСЏ РІ РіСЂСѓРїРїРµ, С‚Рѕ РІС‹РІРѕРґРёС‚СЊ РµРµ РІРјРµСЃС‚Рµ СЃРѕ СЃРІСЏР·Р°РЅРЅРѕР№ СЃРµРєС†РёРµР№
       if (i in SkipBands) then Continue;
       CreateMultiBandMaket(fDataBands[i],fDataBands[i].fNextBand^);
       while not fDataBands[i].fDataSet.Eof do begin
@@ -688,15 +688,15 @@ begin
       end;
       SkipBands:=SkipBands+[GetBandNumber(fDataBands[i].fNextBand^.fName)];
     end else
-      // Иначе, просто подготовить ...
+      // РРЅР°С‡Рµ, РїСЂРѕСЃС‚Рѕ РїРѕРґРіРѕС‚РѕРІРёС‚СЊ ...
       fDataBands[i].Prepare;
 
   for i:=1 to fBandCount do
-    // ... и вывести ее обыкновенно
+    // ... Рё РІС‹РІРµСЃС‚Рё РµРµ РѕР±С‹РєРЅРѕРІРµРЅРЅРѕ
     if fDataBands[i].fNextBand=nil then fDataBands[i].PokeData;
 end;
 
-// Сохранить документ в файл
+// РЎРѕС…СЂР°РЅРёС‚СЊ РґРѕРєСѓРјРµРЅС‚ РІ С„Р°Р№Р»
 
 procedure TWordReport.SaveToFile(FileName: string);
 begin
@@ -704,12 +704,12 @@ begin
   wProgress.DoProgress(10);
 end;
 
-// Объединить две секции в группу
-// так чтобы они чередуясь выводили записи из одного и того же НД.
+// РћР±СЉРµРґРёРЅРёС‚СЊ РґРІРµ СЃРµРєС†РёРё РІ РіСЂСѓРїРїСѓ
+// С‚Р°Рє С‡С‚РѕР±С‹ РѕРЅРё С‡РµСЂРµРґСѓСЏСЃСЊ РІС‹РІРѕРґРёР»Рё Р·Р°РїРёСЃРё РёР· РѕРґРЅРѕРіРѕ Рё С‚РѕРіРѕ Р¶Рµ РќР”.
 
-// Например: Объединить секции с именами 'R' и 'A', использовав поле 'GRID'
-// в качестве ключа. При этом: если GRID=0 - вывести запись в секции R, а если
-// GRID=1 - в секции A.
+// РќР°РїСЂРёРјРµСЂ: РћР±СЉРµРґРёРЅРёС‚СЊ СЃРµРєС†РёРё СЃ РёРјРµРЅР°РјРё 'R' Рё 'A', РёСЃРїРѕР»СЊР·РѕРІР°РІ РїРѕР»Рµ 'GRID'
+// РІ РєР°С‡РµСЃС‚РІРµ РєР»СЋС‡Р°. РџСЂРё СЌС‚РѕРј: РµСЃР»Рё GRID=0 - РІС‹РІРµСЃС‚Рё Р·Р°РїРёСЃСЊ РІ СЃРµРєС†РёРё R, Р° РµСЃР»Рё
+// GRID=1 - РІ СЃРµРєС†РёРё A.
 // JoinBands('GRID','R',0,'A',1);
 
 procedure TWordReport.JoinBands(BandKeyField:string; BandName1:string; KeyValue1:integer; BandName2:string; KeyValue2:integer);
@@ -718,8 +718,8 @@ var
 begin
   i:=GetBandNumber(BandName1);
   j:=GetBandNumber(BandName2);
-  if i<0 then raise Exception.Create('Секция "'+BandName1+'" не найдена в указанном шаблоне');
-  if j<0 then raise Exception.Create('Секция "'+BandName2+'" не найдена в указанном шаблоне');
+  if i<0 then raise Exception.Create('РЎРµРєС†РёСЏ "'+BandName1+'" РЅРµ РЅР°Р№РґРµРЅР° РІ СѓРєР°Р·Р°РЅРЅРѕРј С€Р°Р±Р»РѕРЅРµ');
+  if j<0 then raise Exception.Create('РЎРµРєС†РёСЏ "'+BandName2+'" РЅРµ РЅР°Р№РґРµРЅР° РІ СѓРєР°Р·Р°РЅРЅРѕРј С€Р°Р±Р»РѕРЅРµ');
   if (i<0) or (j<0) then Exit;
   fDataBands[i].fNextBand:=@fDataBands[j];
   fDataBands[j].fNextBand:=@fDataBands[i];
@@ -729,14 +729,14 @@ begin
   fDataBands[j].fKeyValue:=KeyValue2;
 end;
 
-// Существует ли в шаблоне секция с именем BandName
+// РЎСѓС‰РµСЃС‚РІСѓРµС‚ Р»Рё РІ С€Р°Р±Р»РѕРЅРµ СЃРµРєС†РёСЏ СЃ РёРјРµРЅРµРј BandName
 
 function TWordReport.BandExists(BandName: string): boolean;
 begin
   Result:=not (GetBandNumber(BandName)<0);
 end;
 
-// Подготовить вывод группы секций в документ
+// РџРѕРґРіРѕС‚РѕРІРёС‚СЊ РІС‹РІРѕРґ РіСЂСѓРїРїС‹ СЃРµРєС†РёР№ РІ РґРѕРєСѓРјРµРЅС‚
 
 procedure TWordReport.CreateMultiBandMaket(Band1,Band2: TDataBand);
 var
@@ -765,11 +765,11 @@ begin
   cDataset.First;
 end;
 
-// Собрать отчет
-// Выполняет всю последовательность действий
-// (кроме привязки данных, которую должен осуществить пользователь в обработчике OnReadMaket)
-// для формирования одного отчета из шаблона
-// TemplateDocFileName в готовый документ ResultDocFileName
+// РЎРѕР±СЂР°С‚СЊ РѕС‚С‡РµС‚
+// Р’С‹РїРѕР»РЅСЏРµС‚ РІСЃСЋ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґРµР№СЃС‚РІРёР№
+// (РєСЂРѕРјРµ РїСЂРёРІСЏР·РєРё РґР°РЅРЅС‹С…, РєРѕС‚РѕСЂСѓСЋ РґРѕР»Р¶РµРЅ РѕСЃСѓС‰РµСЃС‚РІРёС‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РІ РѕР±СЂР°Р±РѕС‚С‡РёРєРµ OnReadMaket)
+// РґР»СЏ С„РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РѕРґРЅРѕРіРѕ РѕС‚С‡РµС‚Р° РёР· С€Р°Р±Р»РѕРЅР°
+// TemplateDocFileName РІ РіРѕС‚РѕРІС‹Р№ РґРѕРєСѓРјРµРЅС‚ ResultDocFileName
 
 procedure TWordReport.Build;
 begin
@@ -781,7 +781,7 @@ begin
   if not fShowResult then CloseDocument;
 end;
 
-// Регистрация компонента в палитре Delphi
+// Р РµРіРёСЃС‚СЂР°С†РёСЏ РєРѕРјРїРѕРЅРµРЅС‚Р° РІ РїР°Р»РёС‚СЂРµ Delphi
 
 procedure Register;
 begin
