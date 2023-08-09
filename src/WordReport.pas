@@ -1,4 +1,4 @@
-unit WordReport;
+﻿unit WordReport;
 
 {=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\
 |  WordReport - Компонент для автоматизации создания отчетов в MS Word.        |
@@ -54,6 +54,8 @@ type
     function VarToPattern(VarIndex:integer):string;
     function getTableNumberByBookmark: integer;
     procedure Prepare;
+    procedure PokeDataSingle;
+    procedure PokeDataMulti;
     procedure PokeData;
   protected
     function GetDimensionByVarName(VarName: string; Index: integer): string;
@@ -306,90 +308,107 @@ begin
   fVariableNames[bvFormat,VarIndex]:=Format;
 end;
 
-// "Втолкнуть" данные
-// Отправляет все данные секции в документ
-
 var
   // Прежнее значение сигнального поля
   OldKeyValue: integer;
 
-procedure TDataBand.PokeData;
+procedure TDataBand.PokeDataMulti;
 label
-  ValueDefinedS,ValueDefinedM;
+  ValueDefined;
 var
   Pattern,Value: string;
   cField: TField;
   FindObj: Variant;
-  i,j,c: integer;
+  j,c: integer;
+begin
+  c:=fDataset.FieldByName(fKeyName).AsInteger;
+  // Если уровень вложенности больше прежнего, то сбросить счетчик
+  if fKeyValue>OldKeyValue then fCounterVal:=1;
+  while (c=fKeyValue) and (not fDataset.Eof) do begin
+    Pattern:=VarToPattern(0);
+    PrepareFindObject(Pattern,false,FindObj);
+    if FindObj.Execute then begin
+      Value:=IntToStr(fCounterVal)+'.';
+      curWordApp.Selection.Text:=Value;
+    end;
+    for j:=1 to fVariableCount do begin
+      Pattern:=VarToPattern(j);
+      PrepareFindObject(Pattern,false,FindObj);
+      if FindObj.Execute then begin
+        cField:=fDataset.FieldByName(fVariableNames[bvField,j]);
+        if cField.IsNull then begin
+          Value:='';
+          goto ValueDefined;
+        end;
+        if Length(fVariableNames[bvFormat,j])<>0 then begin
+          Value:=Trim(SysUtils.Format(fVariableNames[bvFormat,j],[cField.AsFloat]));
+          goto ValueDefined;
+        end;
+        Value:=cField.AsString;
+ValueDefined:
+        curWordApp.Selection.Text:=Value;
+      end;
+    end;
+    fDataset.Next;
+    wProgress.DoProgress(1);
+    OldKeyValue:=c;
+    c:=fDataset.FieldByName(fKeyName).AsInteger;
+    Inc(fCounterVal);
+  end;
+end;
+
+procedure TDataBand.PokeDataSingle;
+label
+  ValueDefined;
+var
+  Pattern,Value: string;
+  FindObj: Variant;
+  cField: TField;
+  i,j: integer;
+begin
+  fDataSet.First;
+  for i:=1 to fDataset.RecordCount do begin
+    Pattern:=VarToPattern(0);
+    PrepareFindObject(Pattern,false,FindObj);
+    if FindObj.Execute then begin
+      Value:=IntToStr(fDataset.RecNo)+'.';
+      curWordApp.Selection.Text:=Value;
+    end;
+    for j:=1 to fVariableCount do begin
+      Pattern:=VarToPattern(j);
+      PrepareFindObject(Pattern,false,FindObj);
+      if FindObj.Execute then begin
+        cField:=fDataset.FieldByName(fVariableNames[bvField,j]);
+        if cField.IsNull then begin
+          Value:='';
+          goto ValueDefined;
+        end;
+        if Length(fVariableNames[bvFormat,j])<>0 then begin
+          Value:=Trim(SysUtils.Format(fVariableNames[bvFormat,j],[cField.AsFloat]));
+          goto ValueDefined;
+        end;
+        Value:=cField.AsString;
+ValueDefined:
+        curWordApp.Selection.Text:=Value;
+      end;
+    end;
+    fDataSet.Next;
+    wProgress.DoProgress(1);
+  end;
+end;
+
+// "Втолкнуть" данные
+// Отправляет все данные секции в документ
+
+procedure TDataBand.PokeData;
 begin
   if fDataSet=nil then Exit;
   if Length(fKeyName)=0 then begin
     // Если секция не состоит в группе, то обрабатываем ее обыкновенно
-    fDataSet.First;
-    for i:=1 to fDataset.RecordCount do begin
-      Pattern:=VarToPattern(0);
-      PrepareFindObject(Pattern,false,FindObj);
-      if FindObj.Execute then begin
-        Value:=IntToStr(fDataset.RecNo)+'.';
-        curWordApp.Selection.Text:=Value;
-      end;
-      for j:=1 to fVariableCount do begin
-        Pattern:=VarToPattern(j);
-        PrepareFindObject(Pattern,false,FindObj);
-        if FindObj.Execute then begin
-          cField:=fDataset.FieldByName(fVariableNames[bvField,j]);
-          if cField.IsNull then begin
-            Value:='';
-            goto ValueDefinedS;
-          end;
-          if Length(fVariableNames[bvFormat,j])<>0 then begin
-            Value:=Trim(SysUtils.Format(fVariableNames[bvFormat,j],[cField.AsFloat]));
-            goto ValueDefinedS;
-          end;
-          Value:=cField.AsString;
-ValueDefinedS:
-          curWordApp.Selection.Text:=Value;
-        end;
-      end;
-      fDataSet.Next;
-      wProgress.DoProgress(1);
-    end;
+    PokeDataSingle;
   end else begin
     // Иначе обрабатываем только записи с нашим значением сигнального поля
-    c:=fDataset.FieldByName(fKeyName).AsInteger;
-    // Если уровень вложенности больше прежнего, то сбросить счетчик
-    if fKeyValue>OldKeyValue then fCounterVal:=1;
-    while (c=fKeyValue) and (not fDataset.Eof) do begin
-      Pattern:=VarToPattern(0);
-      PrepareFindObject(Pattern,false,FindObj);
-      if FindObj.Execute then begin
-        Value:=IntToStr(fCounterVal)+'.';
-        curWordApp.Selection.Text:=Value;
-      end;
-      for j:=1 to fVariableCount do begin
-        Pattern:=VarToPattern(j);
-        PrepareFindObject(Pattern,false,FindObj);
-        if FindObj.Execute then begin
-          cField:=fDataset.FieldByName(fVariableNames[bvField,j]);
-          if cField.IsNull then begin
-            Value:='';
-            goto ValueDefinedM;
-          end;
-          if Length(fVariableNames[bvFormat,j])<>0 then begin
-            Value:=Trim(SysUtils.Format(fVariableNames[bvFormat,j],[cField.AsFloat]));
-            goto ValueDefinedM;
-          end;
-          Value:=cField.AsString;
-ValueDefinedM:
-          curWordApp.Selection.Text:=Value;
-        end;
-      end;
-      fDataset.Next;
-      wProgress.DoProgress(1);
-      OldKeyValue:=c;
-      c:=fDataset.FieldByName(fKeyName).AsInteger;
-      Inc(fCounterVal);
-    end;
+    PokeDataMulti;
   end;
 end;
 
